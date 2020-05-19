@@ -2,7 +2,8 @@ from random import sample
 
 from flask import render_template, request, redirect, session
 
-from app import app, user_datastore
+from admin.admin import user_datastore
+from app import app
 from common import get_login, get_cart, get_food_list, get_str_for_food, remove_error, get_date, get_sum_price, \
     check_password, hash_password
 from form import LoginAuthForm, OrderedForm
