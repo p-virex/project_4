@@ -1,8 +1,32 @@
+import hashlib
+import uuid
 from datetime import datetime
 
 from flask import session
 
 from models import db, User, Food
+
+
+def check_password(hashed_password, user_password):
+    """
+    Function for checking the correct password
+    :param hashed_password: hashed password from db
+    :param user_password: input user password
+    :return: bool, true if password correct
+    """
+    password, salt = hashed_password.split(':')
+    return password == hashlib.sha256(salt.encode() + user_password.encode()).hexdigest()
+
+
+def hash_password(password):
+    """
+    Function for hashing password
+    :param password: user password
+    :return: hashing user password + random salt
+    """
+    salt = uuid.uuid4().hex  # generate salt
+    # example: www == 	6e3204b0f821234d4591b77d52c35540113fd31f818d1fbb1e63a701685d490e:6e463646a7654778aa9488d905f41482
+    return hashlib.sha256(salt.encode() + password.encode()).hexdigest() + ':' + salt
 
 
 def get_login():

@@ -2,8 +2,9 @@ from random import sample
 
 from flask import render_template, request, redirect, session
 
-from app import app
-from common import get_login, get_cart, get_food_list, get_str_for_food, remove_error, get_date, get_sum_price
+from app import app, user_datastore
+from common import get_login, get_cart, get_food_list, get_str_for_food, remove_error, get_date, get_sum_price, \
+    check_password, hash_password
 from form import LoginAuthForm, OrderedForm
 from models import Category, User, Food, Order, db
 
@@ -48,7 +49,7 @@ def account_page():
         if not user_data:
             session['error'] = 'Аккаунт не существует, Вы можете зарегистровать новый'
             return redirect('/register/')
-        if all([form.login.data == user_data.email, form.password.data == user_data.password]):
+        if all([form.login.data == user_data.email, check_password(user_data.password, form.password.data)]):
             session['id_user'] = user_data.id
             remove_error()
             return render_template('account.html', login=get_login(), orders=[])
@@ -70,8 +71,8 @@ def register():
     if request.method == 'POST':
         user_data = db.session.query(User).get(form.login.data)
         if not user_data:
-            # todo: add salt in the password
-            db.session.add(User(name=form.name.data, email=form.login.data, password=form.password.data, active=True))
+            user_datastore.create_user(name=form.name.data, email=form.login.data,
+                                       password=hash_password(form.password.data))
             db.session.commit()
             return redirect('/account/')
     return redirect('/user_login/')
