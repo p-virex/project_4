@@ -25,3 +25,6 @@ def filling_database():
                 id_food = db.session.query(Category).filter(Category.id == line["category_id"]).first()
                 food.categories.append(id_food)
         db.session.commit()
+
+if __name__ == '__main__':
+    filling_database()

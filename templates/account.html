@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block container %}
 
- <style>
+  <style>
     /* Sticky footer styles
     -------------------------------------------------- */
     html {
@@ -26,73 +26,40 @@
 </head>
 
 <body>
-
   <main class="container">
     <section class="row">
       <div class="col-12 col-lg-8">
         <h1 class="h3 my-5">Личный кабинет. Заказы</h1>
-        <div class="card">
+        {% if orders %}
+        {% for order, order_data in orders.items() %}
+        <div class="card mt-4">
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <div class="row">
                 <div class="col-7 col-lg-9">
-                  <span class="h5 font-weight-bold">25 Февраля</span>
-                  <span class="h5">- 1240 P</span>
+                  <span class="h5 font-weight-bold">{{ order.date }}</span>
+                  <span class="h5">- {{ order.amount }} P</span>
+                  <span class="h5">> {{ order.status }}</span>
                 </div>
-
               </div>
             </li>
             <div class="card-body">
               <div class="row">
-                <p class="col-4 text-muted">Ролл "Хомский" </p>
-                <p class="col-2 text-muted"> 1</p>
-                <p class="col-6 text-muted"> 310 </p>
-                <p class="col-4 text-muted">Бургер 404 </p>
-                <p class="col-2 text-muted"> 1</p>
-                <p class="col-6 text-muted"> 420 </p>
-                <p class="col-4 text-muted">Пицца "Армин" </p>
-                <p class="col-2 text-muted"> 1</p>
-                <p class="col-6 text-muted"> 350 </p>
+               {% for food in  order_data %}
+                    <p class="col-4 text-muted"> {{ food.title }} </p>
+                    <p class="col-2 text-muted"> 1</p>
+                    <p class="col-6 text-muted"> {{ food.price }} </p>
+                {% endfor %}
               </div>
             </div>
           </ul>
         </div>
-        <div class="mt-4 card">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-7 col-lg-9">
-                  <span class="h5 font-weight-bold">11 Февраля</span>
-                  <span class="h5">- 875 P</span>
-                </div>
-
-              </div>
-            </li>
-            <div class="card-body">
-              <div class="row">
-                <p class="col-4 text-muted">Ролл "Хомский" </p>
-                <p class="col-2 text-muted"> 1</p>
-                <p class="col-6 text-muted"> 315 </p>
-                <p class="col-4 text-muted">Бургер 404 </p>
-                <p class="col-2 text-muted"> 1</p>
-                <p class="col-6 text-muted"> 250 </p>
-                <p class="col-4 text-muted">Пицца "Армин" </p>
-                <p class="col-2 text-muted"> 1</p>
-                <p class="col-6 text-muted"> 310 </p>
-              </div>
-            </div>
-          </ul>
-        </div>
+        {% endfor %}
+      {% else %}
+            <div class="alert alert-warning" role="alert">Вы еще не делали заказы</div>
+      {% endif %}
       </div>
     </section>
   </main>
-  <footer class="footer">
-    <nav class="container navbar navbar-light bg-light">
-      <ul class="navbar-nav mr-auto">
-        <p class="h4 nav-link">Stepik Delivery</p>
-      </ul>
-      <a class="text-muted" href="#">Project author 2020</a>
-    </nav>
-  </footer>
 </body>
 {% endblock %}
