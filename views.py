@@ -9,6 +9,16 @@ from form import LoginAuthForm, OrderedForm
 from models import Category, User, Food, Order, db
 
 
+@app.errorhandler(500)
+def render_server_error(error):
+    return f"Что-то не так, но мы все починим. Код ошибки {error}"
+
+
+@app.errorhandler(404)
+def render_not_found(error):
+    return f"Ничего не нашлось! Вот неудача, отправляйтесь на главную! Код ошибки {error}"
+
+
 @app.route('/')
 def home_page():
     dict_food = dict()
