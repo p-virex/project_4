@@ -80,6 +80,9 @@ def account_page():
 def register():
     form = LoginAuthForm()
     if request.method == 'POST':
+        if not form.validate_on_submit():
+            session['error'] = form.errors
+            return redirect('/register/')
         user_data = db.session.query(User).get(form.login.data)
         if not user_data:
             user_datastore.create_user(name=form.name.data, email=form.login.data,
@@ -125,7 +128,7 @@ def register_page():
     form = LoginAuthForm()
     error = session.get('error') if session.get('error') else ''
     remove_error()
-    return render_template('register.html', form=form, error=error)
+    return render_template('register.html', form=form, error_form=error)
 
 
 @app.route('/ordered/', methods=["GET", "POST"])
