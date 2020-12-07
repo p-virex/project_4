@@ -23,12 +23,12 @@ def render_not_found(error):
 
 @app.route('/')
 def home_page():
-    start_date = 1606770003  # 2020-12-01 00:00:01
+    start_date = 1606842003  # 2020-12-01 00:00:01
     in_day = 60 * 60 * 24
     days = int((time.time() - start_date) // in_day)
     hours = int((time.time() - start_date) // 3600)
     minutes = int((time.time() - start_date) // 60)
-    seconds =  int(time.time() - start_date)
+    seconds = int(time.time() - start_date)
     return render_template("main.html", days=days, hours=hours, minutes=minutes, seconds=seconds)
 
 
