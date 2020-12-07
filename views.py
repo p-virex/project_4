@@ -1,3 +1,4 @@
+import time
 from random import sample
 
 from flask import render_template, request, redirect, session
@@ -22,12 +23,10 @@ def render_not_found(error):
 
 @app.route('/')
 def home_page():
-    dict_food = dict()
-    categories = db.session.query(Category).all()
-    for category in categories:
-        food_id = Category.query.filter(Category.id == category.id).scalar()
-        dict_food.setdefault(category.title, sample(food_id.foods, 3))  # 3 - last three meals from list
-    return render_template("main.html", dict_food=dict_food, login=get_login(), cart=get_cart())
+    start_date = 1606770003  # 2020-12-01 00:00:01
+    in_day = 60 * 60 * 24
+    days = int((time.time() - start_date) // in_day)
+    return render_template("main.html", days=days)
 
 
 @app.route('/cart/')
