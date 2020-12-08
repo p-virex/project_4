@@ -21,6 +21,8 @@ def render_not_found(error):
     return f"Ничего не нашлось! Вот неудача, отправляйтесь на главную! Код ошибки {error}"
 
 
+
+
 @app.route('/')
 def home_page():
     start_date = 1606842003  # 2020-12-01 00:00:01
@@ -35,6 +37,11 @@ def home_page():
 @app.route('/fib/89')
 def fib_page():
     return render_template("fib.html")
+
+
+@app.route('/caesar')
+def caesar_page():
+    return render_template("caesar.html")
 
 
 @app.route('/cart/')
