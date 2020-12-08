@@ -32,6 +32,11 @@ def home_page():
     return render_template("main.html", days=days, hours=hours, minutes=minutes, seconds=seconds)
 
 
+@app.route('/fib/89')
+def fib_page():
+    return render_template("fib.html")
+
+
 @app.route('/cart/')
 def cart_page():
     form = OrderedForm()
