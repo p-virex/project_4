@@ -61,7 +61,7 @@ def fib_page():
 
 
 @app.route('/caesar')
-def fib_page():
+def caesar_page():
     return render_template("caesar.html")
 
 
