@@ -57,7 +57,7 @@ def home_page():
 
 @app.route('/fib/89')
 def fib_page():
-    return render_template("fib.html")\
+    return render_template("fib.html")
 
 
 @app.route('/caesar')
